@@ -1,0 +1,349 @@
+﻿<Window x:Class="Kalorimatik.CalculationsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kalorimatik"
+        mc:Ignorable="d"
+		Closing="Window_Closing"
+		WindowStartupLocation="CenterScreen"
+		ResizeMode="CanMinimize"
+        Title="Hesaplamalar"
+		Height="500" 
+		Width="800"
+		Icon="k.ico">
+
+	<Window.Resources>
+		<Style TargetType="{x:Type TextBlock}">
+			<Setter Property="FontSize" Value="16"/>
+		</Style>
+
+		<Style TargetType="{x:Type TextBox}">
+			<Setter Property="TextAlignment" Value="Center"/>
+			<Setter Property="MaxLength" Value="3"/>
+			<EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput"/>
+			<EventSetter Event="PreviewKeyDown" Handler="TextBox_PreviewKeyDown"/>
+			<EventSetter Event="CommandManager.PreviewExecuted" Handler="TextBox_PreviewExecuted" />
+		</Style>
+
+		<Style x:Key="RoundedButton" TargetType="{x:Type Button}">
+			<Style.Setters>
+				<Setter Property="Cursor" Value="Hand"/>
+				<Setter Property="FontSize" Value="12"/>
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Border x:Name="button" CornerRadius="5" BorderBrush="ForestGreen" BorderThickness="1" Background="ForestGreen">
+								<TextBlock x:Name="text" Text="{TemplateBinding Button.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter TargetName="button" Property="BorderBrush" Value="ForestGreen" />
+									<Setter TargetName="button" Property="Background"  Value="White"/>
+									<Setter TargetName="text" Property="Foreground" Value="ForestGreen"/>
+								</Trigger>
+								<Trigger Property="IsPressed" Value="True">
+									<Setter TargetName="button"  Property="Background" Value="LightGreen"/>
+									<Setter TargetName="text" Property="Foreground" Value="White"/>
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style.Setters>
+		</Style>
+
+		<Style x:Key="RoundedButton2" TargetType="{x:Type Button}">
+			<Style.Setters>
+				<Setter Property="Cursor" Value="Hand"/>
+				<Setter Property="FontSize" Value="12"/>
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Border x:Name="button" CornerRadius="5" BorderBrush="ForestGreen" BorderThickness="1" Background="SteelBlue">
+								<TextBlock x:Name="text" Text="{TemplateBinding Button.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter TargetName="button" Property="BorderBrush" Value="SteelBlue" />
+									<Setter TargetName="button" Property="Background"  Value="White"/>
+									<Setter TargetName="text" Property="Foreground" Value="SteelBlue"/>
+								</Trigger>
+								<Trigger Property="IsPressed" Value="True">
+									<Setter TargetName="button"  Property="Background" Value="SkyBlue"/>
+									<Setter TargetName="text" Property="Foreground" Value="White"/>
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style.Setters>
+		</Style>
+	</Window.Resources>
+
+	<Grid>
+		<Grid Margin="12">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="2*"/>
+				<RowDefinition Height="7*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="2*"/>
+				<RowDefinition Height="7*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<Separator Grid.Row="2" Grid.ColumnSpan="3"/>
+
+			<Button HorizontalContentAlignment="Stretch" Click="Button_Click_3" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Width="90" Cursor="Hand">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="img/back.png"/>
+					<TextBlock Text="Geri"
+							   Margin="12,0,0,0"
+							   VerticalAlignment="Center"/>
+				</StackPanel>
+			</Button>
+
+			<TextBlock Text="Beden Kitle İndeksi"
+					   FontSize="16"
+					   FontWeight="SemiBold"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   TextAlignment="Center"
+					   Grid.Column="1"
+					   TextDecorations="Underline"/>
+
+			<Grid Grid.Row="1" Margin="6">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Boy: "
+							   VerticalAlignment="Center"/>
+
+					<TextBox x:Name="_vkiBoy" 
+							 Grid.Column="1"
+							 VerticalAlignment="Center"
+							 MaxLength="3" 
+							 Width="45"/>
+
+					<TextBlock Text="cm"
+							   Grid.Column="2"
+							   Margin="6,0,0,0"
+							   VerticalAlignment="Center"/>
+				</Grid>
+
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Ağırlık: "
+							   VerticalAlignment="Center"/>
+
+					<TextBox x:Name="_vkiKilo" 
+							 Grid.Column="1"
+							 VerticalAlignment="Center"
+							 MaxLength="3" 
+							 Width="45"/>
+
+					<TextBlock Text="kg"
+							   Grid.Column="2"
+							   Margin="6,0,0,0"
+							   VerticalAlignment="Center"/>
+				</Grid>
+			</Grid>
+
+			<Button Grid.Column="1" 
+					Style="{StaticResource RoundedButton2}"
+					Height="32"
+					FontSize="16"
+					Click="Button_Click"
+					Margin="16,0,16,0"
+					Content="BKİ Hesapla"
+					Grid.Row="1"/>
+
+			<TextBlock Grid.Row="1"
+					   x:Name="_vkiSonuc"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Center"
+					   Grid.Column="2"/>
+
+			<TextBlock Text="Bazal Metabolizma Hızı"
+					   Grid.Row="3"
+					   FontSize="16"
+					   FontWeight="SemiBold"
+					   VerticalAlignment="Center"
+					   TextAlignment="Center"
+					   TextDecorations="Underline"
+					   HorizontalAlignment="Stretch"
+					   Grid.ColumnSpan="3"/>
+
+			<Grid Grid.Row="4" Margin="6">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Boy: "
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="Center"/>
+
+					<TextBox x:Name="_bmhBoy" 
+							 Grid.Column="1"
+							 VerticalAlignment="Center"
+							 MaxLength="3" 
+							 Width="45"/>
+
+					<TextBlock Text="cm"
+							   Grid.Column="2"
+							   Margin="6,0,0,0"
+							   VerticalAlignment="Center"/>
+				</Grid>
+
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Ağırlık: "
+							   VerticalAlignment="Center"/>
+
+					<TextBox x:Name="_bmhKilo" 
+							 Grid.Column="1"
+							 VerticalAlignment="Center"
+							 MaxLength="3" 
+							 Width="45"/>
+
+					<TextBlock Text="kg"  
+							   Grid.Column="2"
+							   Margin="6,0,0,0"
+							   VerticalAlignment="Center"/>
+				</Grid>
+
+				<Grid Grid.Row="2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Yaş: "
+							   VerticalAlignment="Center"/>
+
+					<TextBox x:Name="_bmhYas" 
+							 Grid.Column="1"
+							 VerticalAlignment="Center"
+							 MaxLength="3" 
+							 Width="45"/>
+				</Grid>
+
+				<Grid Grid.Row="3">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Cinsiyet: "
+							   VerticalAlignment="Center"/>
+
+					<ComboBox Grid.Column="1"
+							  Margin="0,3,0,3"
+							  IsEditable="False"
+							  x:Name="_bmhCinsiyet"
+							  Grid.ColumnSpan="2">
+						<ComboBoxItem IsSelected="True">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="img/female.png" 
+									   Height="12"/>
+								<TextBlock Text="Kadın"
+										   FontSize="12"
+										   Margin="6,0,0,0"/>
+							</StackPanel>
+						</ComboBoxItem>
+						<ComboBoxItem>
+							<StackPanel Orientation="Horizontal">
+								<Image Source="img/male.png" 
+									   Height="12"/>
+								<TextBlock Text="Erkek"
+										   FontSize="12"
+										   Margin="6,0,0,0"/>
+							</StackPanel>
+						</ComboBoxItem>
+					</ComboBox>
+				</Grid>
+
+				<Grid Grid.Row="4">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="Aktivite: "
+							   VerticalAlignment="Center"/>
+
+					<ComboBox Grid.Column="1"
+							  x:Name="_bmhAktivite"
+							  IsEditable="False"
+							  Margin="0,3,0,3"
+							  Grid.ColumnSpan="2">
+						<ComboBoxItem>Hareketsiz</ComboBoxItem>
+						<ComboBoxItem>Az Hareketli</ComboBoxItem>
+						<ComboBoxItem IsSelected="True">Orta Hareketli</ComboBoxItem>
+						<ComboBoxItem>Çok Hareketli</ComboBoxItem>
+						<ComboBoxItem>Aşırı Hareketli</ComboBoxItem>
+					</ComboBox>
+				</Grid>
+			</Grid>
+
+			<Grid Grid.Row="4" Grid.Column="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Button Grid.Column="1" 
+					Style="{StaticResource RoundedButton}"
+					Height="32"
+					FontSize="16"
+					Click="Button_Click_1"
+					Margin="16,0,16,0"
+					Content="Schofield Hesapla"/>
+
+				<Button Grid.Column="1" 
+					Style="{StaticResource RoundedButton}"
+					Height="32"
+					FontSize="16"
+					Click="Button_Click_2"
+					Grid.Row="1"
+					Margin="16,0,16,0"
+					Content="Harris-Benedict Hesapla"/>
+			</Grid>
+
+			<TextBlock Grid.Row="4"
+					   x:Name="_bmhSonuc"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Center"
+					   Grid.Column="2"/>
+		</Grid>
+	</Grid>
+</Window>
